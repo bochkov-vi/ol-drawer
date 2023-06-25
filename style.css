@@ -1,0 +1,42 @@
+@import "node_modules/ol/ol.css";
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.palette {
+    left: 20px;
+    top: 60px;
+    position: absolute;
+    width: 64px;
+    background: white;
+    box-shadow:  0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.legend-icon {
+    border: 1px solid black !important;
+}
+
+.drawer-control.active{
+    background: rgba(200,200,255,0.5);
+}
+.text-form {
+    position: fixed;
+    width: 15em;
+    background: white;
+}
+.text-form label{
+    display: block;
+    padding: 10px;
+}
+.text-form input[text]{
+    width: 100%;
+}

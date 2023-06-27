@@ -46,6 +46,15 @@ export abstract class ActivatedControl extends Control {
         this.set(ActivatedControl.ACTIVE, value);
     }
 
+    toggleActive() {
+        this.active = !this.active;
+    }
+
+    toggleEnabled() {
+        this.enabled = !this.enabled;
+    }
+
+
     /**
      * вызов идет из объекта карты
      * самое время настроить наш компонент

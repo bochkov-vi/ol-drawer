@@ -13,6 +13,7 @@ import Modify from 'ol/interaction/Modify';
 import {TextDrawerControl} from './src/TextDrawerControl';
 import Feature from 'ol/Feature.js';
 import {isFunction} from 'lodash';
+import {RemoveControl} from './src/RemoveControl';
 
 const map = new Map({
     target: 'map',
@@ -56,6 +57,9 @@ map.addLayer(layer);
 const container = document.querySelector('.palette') as HTMLElement;
 map.addControl(new Control({element: container}))
 
+const removeControl = new RemoveControl(layer, container);
+map.addControl(removeControl);
+
 const drawers = [
     new DrawerControl({
         featureStyleKey: 'whiteCircle',
@@ -96,21 +100,33 @@ const universalStyle = (feature: Feature, resolution: number) => {
         return style;
     }
 };
+
 layer.setStyle(universalStyle);
 
 const textDrawer = new TextDrawerControl(layer)
 textDrawer.setTarget(container)
 drawers.push(textDrawer);
 
+
 drawers.forEach(d => {
     d.addChangeListener('active', (e) => {
-        if (e.target.active === true)
+        if (e.target.active === true) {
             drawers.filter(d => d !== e.target).forEach(d => d.active = false);
+            removeControl.active = false;
+        }
 
     })
 })
 const modify = new Modify({
     source: layer.getSource(), pixelTolerance: 15, style: layer.getStyle()
 });
+removeControl.addChangeListener('active', () => {
+    if (removeControl.active) {
+        modify.setActive(false);
+        drawers.forEach(d => d.active = false);
+    } else {
+        modify.setActive(true);
+    }
+})
 map.addInteraction(modify)
 drawers.forEach(d => map.addControl(d));

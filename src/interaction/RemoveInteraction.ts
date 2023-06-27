@@ -79,6 +79,7 @@ export class RemoveInteraction extends Interaction {
             this.hiLightLayer.getSource().clear();
             if(e.selected) {this.hiLightLayer.getSource().addFeatures(e.selected)}
         })
+        this.addChangeListener('active',()=>this.hoverSelect.setActive(this.getActive()));
     }
 
     handleMapClick() {
@@ -86,6 +87,7 @@ export class RemoveInteraction extends Interaction {
         features.forEach(f=>this.layer.getSource().removeFeature(f));
         this.hiLightLayer.getSource().clear();
     }
+
 
 
     setMap(map: Map) {
